@@ -1,0 +1,5 @@
+main: MainFrame.MainFrame
+version : 1.0.0
+name: TammyFrame
+author: TheNyxorion
+api-version: 1.13
