@@ -98,6 +98,12 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <artifactSet>
+                                <includes>
+                                    <include>org.jetbrains.kotlin:*</include>
+                                    <include>org.jetbrains.kotlinx:*</include>
+                                </includes>
+                            </artifactSet>
                             <relocations>
                                 <relocation>
                                     <pattern>kotlinx.coroutines</pattern>
