@@ -2,6 +2,10 @@ package TmCorrutines;
 
 abstract class TmAsync {
 
+    public void CreateAsync() {
+        activateCoroutine();
+    }
+
     private void activateCoroutine(){
         corrutines.runAsync(()->{
             //corrutina
