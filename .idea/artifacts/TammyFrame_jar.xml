@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TammyFrame:jar">
+    <output-path>$PROJECT_DIR$/../../servers/1.21/plugins</output-path>
+    <root id="archive" name="TammyFrame.jar">
+      <element id="module-output" name="TammyFrame" />
+    </root>
+  </artifact>
+</component>
