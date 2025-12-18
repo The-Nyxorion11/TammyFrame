@@ -1,7 +1,8 @@
-package TmCorrutines;
+package TmCorroutines;
+import TmCorroutines.corrutines;
 
 abstract class TmAsync {
-
+    //to activate coroutines
     public void CreateAsync() {
         activateCoroutine();
     }
