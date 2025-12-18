@@ -1,6 +1,6 @@
 package TmCorroutines;
-import TmCorroutines.corrutines;
 import org.bukkit.Bukkit;
+
 
 abstract class TmAsync {
     //to activate coroutines
