@@ -19,6 +19,7 @@ abstract class TmAsync {
                     Callback();
                 });
             }catch(Exception ex){
+                //get the error
                 Bukkit.getConsoleSender().sendMessage(utils.TammyUtils.messageColor("ERROR: " + ex.getMessage()));
             }
 
