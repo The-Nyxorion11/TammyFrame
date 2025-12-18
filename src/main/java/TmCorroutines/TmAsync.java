@@ -1,5 +1,6 @@
 package TmCorroutines;
 import TmCorroutines.corrutines;
+import org.bukkit.Bukkit;
 
 abstract class TmAsync {
     //to activate coroutines
@@ -9,13 +10,17 @@ abstract class TmAsync {
 
     private void activateCoroutine(){
         corrutines.runAsync(()->{
-            //corrutina
-            onAsync();
+            try{
+                //corrutina
+                onAsync();
 
-            //go back to the main thread
-            corrutines.runSync(()->{
-               Callback();
-            });
+                //go back to the main thread
+                corrutines.runSync(()->{
+                    Callback();
+                });
+            }catch(Exception ex){
+                Bukkit.getConsoleSender().sendMessage(utils.TammyUtils.messageColor("ERROR: " + ex.getMessage()));
+            }
 
         });
     }
