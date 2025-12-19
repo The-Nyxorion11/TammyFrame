@@ -20,11 +20,8 @@ public class TmRoom {
         this.plugin = plugin;
     }
 
-
-
     public void TmRoomCreate(){
         try {
-
             //Create the folder where the database will be located.
             File dbFolder = new File(this.location, this.nameDataBase + ".db");
 
