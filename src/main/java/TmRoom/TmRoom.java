@@ -24,11 +24,6 @@ public class TmRoom {
 
     public void TmRoomCreate(){
         try {
-            //make sure it's in the plugins folder
-            if(!plugin.getDataFolder().exists()){
-                Bukkit.getLogger().log(Level.WARNING, "Error, the \"plugins\" file does not exist. Your plugin must be in your server's plugins directory! ");
-                return;
-            }
 
             //Create the folder where the database will be located.
             File dbFolder = new File(this.location, this.nameDataBase + ".db");
