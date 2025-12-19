@@ -22,8 +22,18 @@ public class TmRoom {
 
     public void TmRoomCreate(){
         try {
+
+            // Forzar el Driver
+            Class.forName("org.sqlite.JDBC");
+
+            File folder = new File(this.location);
+
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+
             //Create the folder where the database will be located.
-            File dbFolder = new File(this.location, this.nameDataBase + ".db");
+            File dbFolder = new File(folder, this.nameDataBase + ".db");
 
             String url = "jdbc:sqlite:" + dbFolder.getAbsolutePath();
             connection = DriverManager.getConnection(url);
