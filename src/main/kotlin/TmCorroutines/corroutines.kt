@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
 
-object corrutines {
+object corroutines {
 
     private val frameScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 

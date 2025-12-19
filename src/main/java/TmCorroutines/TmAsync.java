@@ -1,6 +1,8 @@
 package TmCorroutines;
 import org.bukkit.Bukkit;
 
+import java.util.logging.Level;
+
 public abstract class TmAsync {
     //to activate coroutines
     public void CreateAsync() {
@@ -9,18 +11,18 @@ public abstract class TmAsync {
     }
 
     private void activateCoroutine(){
-        corrutines.runAsync(()->{
+        corroutines.runAsync(()->{
             try{
                 //corrutina
                 onAsync();
 
                 //go back to the main thread
-                corrutines.runSync(()->{
+                corroutines.runSync(()->{
                     Callback();
                 });
             }catch(Exception ex){
                 //get the error
-                Bukkit.getConsoleSender().sendMessage(utils.TammyUtils.messageColor("ERROR: " + ex.getMessage()));
+                Bukkit.getLogger().log(Level.WARNING, "async error "+ex);
             }
 
         });
