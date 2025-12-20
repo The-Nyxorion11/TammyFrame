@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 public class TmRoom {
-    private static Connection connection;
+    private Connection connection;
 
     private String location;
     private String nameDataBase;
@@ -19,7 +19,7 @@ public class TmRoom {
         this.nameDataBase = nameDataBase;
         this.plugin = plugin;
     }
-
+    //create file
     public void TmRoomCreate(){
         try {
 
@@ -36,7 +36,7 @@ public class TmRoom {
             File dbFolder = new File(folder, this.nameDataBase + ".db");
 
             String url = "jdbc:sqlite:" + dbFolder.getAbsolutePath();
-            connection = DriverManager.getConnection(url);
+            this.connection = DriverManager.getConnection(url);
 
             //send Message
             Bukkit.getLogger().log(Level.INFO, "Database successfully linked to: " + dbFolder.getName());
@@ -48,9 +48,11 @@ public class TmRoom {
     }
     //returns the location
     public Connection TmRoomConnect(){
-        return connection;
+        return this.connection;
     }
 
+
+    //create
     public void TmRoomCreateTable(String tableName, List<String> columns){
         if (columns == null || columns.isEmpty()) return;
 
@@ -70,12 +72,77 @@ public class TmRoom {
             sqlBuilder.append(");");
 
             //Run only once
-            try (Statement stmt = connection.createStatement()) {
+            try (Statement stmt = this.connection.createStatement()) {
                 stmt.execute(sqlBuilder.toString());
+            }catch(Exception ex){
+                Bukkit.getLogger().log(Level.WARNING, "Error trying to create the database "+ex);
             }
         }catch(Exception ex){
             Bukkit.getLogger().log(Level.WARNING, "Error trying to create the database "+ex);
         }
+    }
+
+    //insert
+    public void TmRoomInsert(String nameTable, List<String> position, List<String> values){
+        try{
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.append("INSERT INTO ").append(nameTable).append(" (");
+
+            for (int i = 0; i < position.size(); i++) {
+                if (i > 0) {
+                    sqlBuilder.append(", ");
+                }
+                sqlBuilder.append(position.get(i));
+            }
+
+            sqlBuilder.append(") VALUES (");
+
+            for (int i = 0; i < values.size(); i++) {
+                if (i > 0) {
+                    sqlBuilder.append(", ");
+                }
+                sqlBuilder.append(values.get(i));
+            }
+
+            sqlBuilder.append(" )");
+
+            try (Statement stmt = this.connection.prepareStatement(sqlBuilder.toString())) {
+                stmt.executeUpdate(sqlBuilder.toString());
+
+            }catch(Exception ex){
+                Bukkit.getLogger().log(Level.WARNING, "Error trying to Insert the database "+ex);
+            }
+        }catch (Exception ex){
+            Bukkit.getLogger().log(Level.WARNING, "Error trying to Insert the database "+ex);
+        }
+    }
+
+
+    //update
+    public void TmRoomUpdate(String nameTable, List<String> setInColumn, String whereId){
+        try{
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.append("UPDATE ").append(nameTable).append(" SET ");
+
+            for (int i = 0; i < setInColumn.size(); i++) {
+                if (i > 0) {
+                    sqlBuilder.append(", ");
+                }
+                sqlBuilder.append(setInColumn.get(i));
+            }
+
+            sqlBuilder.append("WHERE ").append(whereId);
+
+            try(Statement stmt = this.connection.prepareStatement(sqlBuilder.toString())) {
+                stmt.executeUpdate(sqlBuilder.toString());
+
+            }catch(Exception ex){
+                Bukkit.getLogger().log(Level.WARNING, "Error trying to update the database "+ex);
+            }
+        }catch(Exception ex){
+            Bukkit.getLogger().log(Level.WARNING, "Error trying to update the database "+ex);
+        }
+
     }
 
 }
