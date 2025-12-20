@@ -1,5 +1,5 @@
 TammyFrame
-![TammyLogo](https://github.com/The-Nyxorion11/TammyFrame/blob/master/src/img/logo%20tammyframe.png?raw=true)
+![TammyLogo](https://github.com/The-Nyxorion11/TammyFrame/blob/master/src/img/logo%20tammyframeTin.png?raw=true)
 What is it?
 
 Tammy is a framework that facilitates plugin creation through an OOP (Object-Oriented Programming) format. The framework is still under development; therefore, new content will continue to be added to further simplify plugin development.
@@ -7,7 +7,7 @@ Tammy is a framework that facilitates plugin creation through an OOP (Object-Ori
 
 What is it for?
 
-
+			
 With Tammy, you can implement Coroutines in a simple way and, as of now, manage data persistence with SQLite.
 
 
