@@ -1,5 +1,5 @@
- TammyFrame
- 
+TammyFrame
+![TammyLogo](https://github.com/The-Nyxorion11/TammyFrame/blob/master/src/img/logo%20tammyframe.png?raw=true)
 What is it?
 
 Tammy is a framework that facilitates plugin creation through an OOP (Object-Oriented Programming) format. The framework is still under development; therefore, new content will continue to be added to further simplify plugin development.
