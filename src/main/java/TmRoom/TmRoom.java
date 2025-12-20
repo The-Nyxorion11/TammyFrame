@@ -106,8 +106,8 @@ public class TmRoom {
 
             sqlBuilder.append(" )");
 
-            try (Statement stmt = this.connection.prepareStatement(sqlBuilder.toString())) {
-                stmt.executeUpdate(sqlBuilder.toString());
+            try (PreparedStatement stmt = this.connection.prepareStatement(sqlBuilder.toString())) {
+                stmt.executeUpdate();
 
             }catch(Exception ex){
                 Bukkit.getLogger().log(Level.WARNING, "Error trying to Insert the database "+ex);
@@ -131,10 +131,10 @@ public class TmRoom {
                 sqlBuilder.append(setInColumn.get(i));
             }
 
-            sqlBuilder.append("WHERE ").append(whereId);
+            sqlBuilder.append(" WHERE ").append(whereId);
 
-            try(Statement stmt = this.connection.prepareStatement(sqlBuilder.toString())) {
-                stmt.executeUpdate(sqlBuilder.toString());
+            try(PreparedStatement stmt = this.connection.prepareStatement(sqlBuilder.toString())) {
+                stmt.executeUpdate();
 
             }catch(Exception ex){
                 Bukkit.getLogger().log(Level.WARNING, "Error trying to update the database "+ex);
