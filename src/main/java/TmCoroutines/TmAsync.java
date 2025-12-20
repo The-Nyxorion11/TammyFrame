@@ -1,4 +1,4 @@
-package TmCorroutines;
+package TmCoroutines;
 import org.bukkit.Bukkit;
 
 import java.util.logging.Level;
@@ -6,18 +6,18 @@ import java.util.logging.Level;
 public abstract class TmAsync {
     //to activate coroutines
     public void CreateAsync() {
-        //call corroutines
+        //call coroutines
         activateCoroutine();
     }
 
     private void activateCoroutine(){
-        corroutines.runAsync(()->{
+        coroutines.runAsync(()->{
             try{
-                //corrutina
+                //coroutine
                 onAsync();
 
                 //go back to the main thread
-                corroutines.runSync(()->{
+                coroutines.runSync(()->{
                     Callback();
                 });
             }catch(Exception ex){

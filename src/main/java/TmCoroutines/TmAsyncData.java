@@ -1,4 +1,4 @@
-package TmCorroutines;
+package TmCoroutines;
 
 import org.bukkit.Bukkit;
 
@@ -10,13 +10,13 @@ public abstract class TmAsyncData<T>{
     }
 
     private void activateCoroutine(){
-        corroutines.runAsync(()->{
+        coroutines.runAsync(()->{
             try{
-                //corrutina
+                //coroutine
                 final T checkResult = onAsync();
 
                 //go back to the main thread
-                corroutines.runSync(()->{
+                coroutines.runSync(()->{
                     Data(checkResult);
                 });
             }catch(Exception ex){

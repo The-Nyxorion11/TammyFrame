@@ -4,7 +4,9 @@ import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.sql.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 public class TmRoom {
@@ -160,11 +162,87 @@ public class TmRoom {
 
     }
 
+    //get
+    public synchronized Map<String, Object> TmRoomGet(List<String> columnName, String TableName, String whereId){
+        try{
+            if (whereId == null || whereId.isEmpty()) {
+                Bukkit.getLogger().log(Level.WARNING, "Error: whereId cannot be empty!");
+                return null;
+            }
+
+            Map<String, Object> results = new HashMap<>();
+
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.append("SELECT ");
+            for (int i = 0; i < columnName.size(); i++) {
+                if (i > 0) {
+                    sqlBuilder.append(", ");
+                }
+                sqlBuilder.append(columnName.get(i));
+            }
+
+            sqlBuilder.append(" FROM ").append(TableName).append(" WHERE ").append(whereId);
+
+
+
+            try(PreparedStatement stmt = this.connection.prepareStatement(sqlBuilder.toString())) {
+
+
+                try(ResultSet resultset = stmt.executeQuery()){
+
+                    if(resultset.next()){
+                        for (String col : columnName) {
+                            //Save each column on the map
+                            results.put(col, resultset.getObject(col));
+                        }
+                        return results;
+                    }else{
+                        Bukkit.getLogger().log(Level.WARNING, "Error, row not found ");
+                        return null;
+                    }
+
+                }catch(Exception ex){
+                    Bukkit.getLogger().log(Level.WARNING, "Error trying to get the database "+ex);
+                    return null;
+                }
+            }catch(Exception ex){
+                Bukkit.getLogger().log(Level.WARNING, "Error trying to get the database "+ex);
+                return null;
+            }
+
+        }catch(Exception ex){
+            Bukkit.getLogger().log(Level.WARNING, "Error trying to get the database "+ex);
+            return null;
+        }
+    }
+    //delete
+    public synchronized boolean TmRoomDelete(String tableName, String whereId){
+        try {
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.append("DELETE FROM ").append(tableName).append(" WHERE ").append(whereId);
+
+            try(PreparedStatement stmt = this.connection.prepareStatement(sqlBuilder.toString())) {
+               if(stmt.executeUpdate() > 0){
+                   return true;
+               }else{
+                   return false;
+               }
+
+            }catch(Exception ex){
+                Bukkit.getLogger().log(Level.WARNING, "Error trying to delete the database "+ex);
+                return false;
+            }
+
+        }catch(Exception ex){
+            Bukkit.getLogger().log(Level.WARNING, "Error trying to delete the database "+ex);
+            return false;
+        }
+    }
+
     public void TmRoomCls() {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
-                // Bukkit.getLogger().info("Conexión cerrada.");
             }
         } catch (SQLException e) {
             Bukkit.getLogger().log(Level.WARNING, "Error "+e);

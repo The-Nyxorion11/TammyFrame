@@ -1,4 +1,4 @@
-package TmCorroutines
+package TmCoroutines
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -7,13 +7,13 @@ import kotlinx.coroutines.launch
 import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
 
-object corroutines {
+object coroutines {
 
     private val frameScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     lateinit var plugin: Plugin
 
-    //create the coroutine the coroutine
+    //create the coroutine
     @JvmStatic
     fun runAsync(CodeAsync: Runnable){
         frameScope.launch {

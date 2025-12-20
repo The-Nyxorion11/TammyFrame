@@ -1,4 +1,4 @@
-package utils;
+package TmUtils;
 
 import org.bukkit.ChatColor;
 
