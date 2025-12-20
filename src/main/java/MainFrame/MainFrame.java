@@ -1,5 +1,6 @@
 package MainFrame;
 
+import TmRoom.TmRoomManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import utils.TammyUtils;
@@ -17,5 +18,6 @@ public class MainFrame extends JavaPlugin {
     @Override
     public void onDisable() {
         Bukkit.getConsoleSender().sendMessage(TammyUtils.messageColor(prefix + "Plugin Disabled!"));
+        TmRoomManager.clsDb();
     }
 }

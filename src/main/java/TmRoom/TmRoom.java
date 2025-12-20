@@ -18,6 +18,8 @@ public class TmRoom {
         this.location = location;
         this.nameDataBase = nameDataBase;
         this.plugin = plugin;
+
+        TmRoomManager.regisDb(this);
     }
     //create file
     public void TmRoomCreate(){
@@ -38,6 +40,11 @@ public class TmRoom {
             String url = "jdbc:sqlite:" + dbFolder.getAbsolutePath();
             this.connection = DriverManager.getConnection(url);
 
+            try (Statement stmt = this.connection.createStatement()) {
+                stmt.execute("PRAGMA journal_mode=WAL;");
+                stmt.execute("PRAGMA synchronous=NORMAL;");
+            }
+
             //send Message
             Bukkit.getLogger().log(Level.INFO, "Database successfully linked to: " + dbFolder.getName());
 
@@ -53,8 +60,8 @@ public class TmRoom {
 
 
     //create
-    public void TmRoomCreateTable(String tableName, List<String> columns){
-        if (columns == null || columns.isEmpty()) return;
+    public synchronized boolean TmRoomCreateTable(String tableName, List<String> columns){
+        if (columns == null || columns.isEmpty()) return true;
 
         try{
             String primaryKey = columns.get(0);
@@ -74,16 +81,19 @@ public class TmRoom {
             //Run only once
             try (Statement stmt = this.connection.createStatement()) {
                 stmt.execute(sqlBuilder.toString());
+                return true;
             }catch(Exception ex){
                 Bukkit.getLogger().log(Level.WARNING, "Error trying to create the database "+ex);
+                return false;
             }
         }catch(Exception ex){
             Bukkit.getLogger().log(Level.WARNING, "Error trying to create the database "+ex);
+            return false;
         }
     }
 
     //insert
-    public void TmRoomInsert(String nameTable, List<String> position, List<String> values){
+    public synchronized boolean TmRoomInsert(String nameTable, List<String> position, List<String> values){
         try{
             StringBuilder sqlBuilder = new StringBuilder();
             sqlBuilder.append("INSERT INTO ").append(nameTable).append(" (");
@@ -108,18 +118,21 @@ public class TmRoom {
 
             try (PreparedStatement stmt = this.connection.prepareStatement(sqlBuilder.toString())) {
                 stmt.executeUpdate();
+                return true;
 
             }catch(Exception ex){
                 Bukkit.getLogger().log(Level.WARNING, "Error trying to Insert the database "+ex);
+                return false;
             }
         }catch (Exception ex){
             Bukkit.getLogger().log(Level.WARNING, "Error trying to Insert the database "+ex);
+            return false;
         }
     }
 
 
     //update
-    public void TmRoomUpdate(String nameTable, List<String> setInColumn, String whereId){
+    public synchronized boolean TmRoomUpdate(String nameTable, List<String> setInColumn, String whereId){
         try{
             StringBuilder sqlBuilder = new StringBuilder();
             sqlBuilder.append("UPDATE ").append(nameTable).append(" SET ");
@@ -135,14 +148,27 @@ public class TmRoom {
 
             try(PreparedStatement stmt = this.connection.prepareStatement(sqlBuilder.toString())) {
                 stmt.executeUpdate();
-
+                return true;
             }catch(Exception ex){
                 Bukkit.getLogger().log(Level.WARNING, "Error trying to update the database "+ex);
+                return false;
             }
         }catch(Exception ex){
             Bukkit.getLogger().log(Level.WARNING, "Error trying to update the database "+ex);
+            return false;
         }
 
+    }
+
+    public void TmRoomCls() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+                // Bukkit.getLogger().info("Conexión cerrada.");
+            }
+        } catch (SQLException e) {
+            Bukkit.getLogger().log(Level.WARNING, "Error "+e);
+        }
     }
 
 }
