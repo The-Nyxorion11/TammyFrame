@@ -14,12 +14,10 @@ public class TmRoom {
 
     private String location;
     private String nameDataBase;
-    private Plugin plugin;
 
-    public TmRoom(String location, String nameDataBase,  Plugin plugin) {
+    public TmRoom(String location, String nameDataBase) {
         this.location = location;
         this.nameDataBase = nameDataBase;
-        this.plugin = plugin;
 
         TmRoomManager.regisDb(this);
     }
