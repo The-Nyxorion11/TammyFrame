@@ -25,7 +25,6 @@ public class TmRoom {
     public void TmRoomCreate(){
         try {
 
-            // Forzar el Driver
             Class.forName("org.sqlite.JDBC");
 
             File folder = new File(this.location);

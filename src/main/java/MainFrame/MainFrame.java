@@ -1,5 +1,6 @@
 package MainFrame;
 
+import TmCoroutines.coroutines;
 import TmRoom.TmRoomManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,6 +14,7 @@ public class MainFrame extends JavaPlugin {
     @Override
     public void onEnable() {
         Bukkit.getConsoleSender().sendMessage(TammyUtils.messageColor(prefix + "Plugin Enabled! version: " + version));
+        coroutines.plugin = this;
     }
 
     @Override
