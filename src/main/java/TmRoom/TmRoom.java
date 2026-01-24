@@ -12,11 +12,11 @@ import java.util.logging.Level;
 public class TmRoom {
     private Connection connection;
 
-    private String location;
+    private Plugin plugin;
     private String nameDataBase;
 
-    public TmRoom(String location, String nameDataBase) {
-        this.location = location;
+    public TmRoom(Plugin plugin, String nameDataBase) {
+        this.plugin = plugin;
         this.nameDataBase = nameDataBase;
 
         TmRoomManager.regisDb(this);
@@ -27,13 +27,13 @@ public class TmRoom {
 
             Class.forName("org.sqlite.JDBC");
 
-            File folder = new File(this.location);
+            File folder = new File(plugin.getDataFolder(), nameDataBase);
 
             if (!folder.exists()) {
                 folder.mkdirs();
             }
 
-            //Create the folder where the database will be located.
+            //Create the folder whellre the database wi be located.
             File dbFolder = new File(folder, this.nameDataBase + ".db");
 
             String url = "jdbc:sqlite:" + dbFolder.getAbsolutePath();

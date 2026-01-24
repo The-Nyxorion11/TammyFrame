@@ -1,5 +1,8 @@
 package TmUI.window;
 
+import TmUI.Layouts.FillBorder;
+import TmUI.Layouts.Layouts;
+import TmUI.controls.Button;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -7,12 +10,22 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
+
+import TmUI.SystemUi;
 
 public abstract class Ui {
 
     private Inventory inventory;
+    private boolean blockInventory = false;
+
+    //moreSystems
+    protected Layouts layouts = new Layouts(inventory);
+    protected Button button = new Button(){@Override public void onClick() {}};
+    protected FillBorder fillBorder = new FillBorder();
 
     public void openUi(Player player, int size, String title){
         constructor(player,  size, title);
@@ -23,6 +36,7 @@ public abstract class Ui {
         // more ui logic
         createInventory(size, title);
         compose();
+        setConfig(player);
         openInventory(player);
     }
 
@@ -32,6 +46,14 @@ public abstract class Ui {
 
     private void openInventory(Player player){
         player.openInventory(inventory);
+    }
+
+    private void setConfig(Player player){
+        if(blockInventory){
+            UUID uuid = player.getUniqueId();
+            String title = inventory.getTitle();
+            SystemUi.inventoryBlocked.put(uuid, title);
+        }
     }
     
 
@@ -58,5 +80,7 @@ public abstract class Ui {
     protected void setItem(int slot, ItemStack item){
         inventory.setItem(slot, item);
     }
+
+
 
 }
