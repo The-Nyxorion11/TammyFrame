@@ -12,7 +12,6 @@ public class FillBorder {
     private ItemStack item;
     private int Thickness = 1;
 
-    public FillBorder() {}
 
     public FillBorder(Inventory inventory){
         this.inventory = inventory;

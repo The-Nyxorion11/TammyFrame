@@ -9,6 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import TmUI.SystemUi;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.inventory.InventoryView;
 
 import java.util.UUID;
 
@@ -18,7 +19,10 @@ public class BlockEvent implements Listener {
     public void removeItem(InventoryClickEvent event){
         Player player = (Player) event.getWhoClicked();
 
-        if (getTitle(player).equalsIgnoreCase(event.getInventory().getTitle())) {
+        InventoryView view = event.getView();
+        String title = view.getTitle();
+
+        if (getTitle(player).equalsIgnoreCase(title)) {
             event.setCancelled(true);
 
         }
@@ -27,6 +31,10 @@ public class BlockEvent implements Listener {
     @EventHandler
     public void onInventoryDrag(InventoryDragEvent event) {
         Player player = (Player) event.getWhoClicked();
+
+        InventoryView view = event.getView();
+        String title = view.getTitle();
+
         if (getTitle(player).equalsIgnoreCase(event.getInventory().getTitle())) {
             event.setCancelled(true);
         }

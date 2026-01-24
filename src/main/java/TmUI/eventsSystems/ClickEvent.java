@@ -29,8 +29,6 @@ public class ClickEvent implements Listener {
     }
 
     private Button getButton(Inventory inventory){
-        String defaultValue = "not exist, sorry! (-.,´ñllñsad<|¿320)";
-
         Button button = SystemUi.inventoryClick.get(inventory);
 
 

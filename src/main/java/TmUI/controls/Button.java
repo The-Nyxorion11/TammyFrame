@@ -10,9 +10,13 @@ public abstract class Button {
     private ItemStack item;
     private Inventory inventory;
 
-    public Button() {
 
+    public Button(ItemStack item, Inventory inventory) {
+        this.item = item;
+        this.inventory = inventory;
     }
+
+
 
     public void enable(){
         SystemUi.inventoryClick.put(inventory, this);

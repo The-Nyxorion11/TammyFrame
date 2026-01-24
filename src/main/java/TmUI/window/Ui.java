@@ -24,8 +24,7 @@ public abstract class Ui {
 
     //moreSystems
     protected Layouts layouts = new Layouts(inventory);
-    protected Button button = new Button(){@Override public void onClick() {}};
-    protected FillBorder fillBorder = new FillBorder();
+
 
     public void openUi(Player player, int size, String title){
         constructor(player,  size, title);
@@ -79,6 +78,11 @@ public abstract class Ui {
 
     protected void setItem(int slot, ItemStack item){
         inventory.setItem(slot, item);
+    }
+
+    //utils
+    public Inventory getInventory(){
+        return inventory;
     }
 
 
