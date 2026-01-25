@@ -26,6 +26,7 @@ public class BlockEvent implements Listener {
             event.setCancelled(true);
 
         }
+        Str
     }
 
     @EventHandler

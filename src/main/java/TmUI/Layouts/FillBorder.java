@@ -9,51 +9,74 @@ import java.util.logging.Level;
 
 public class FillBorder {
     private Inventory inventory;
-    private ItemStack item;
+    private ItemStack borderItem;
+    private ItemStack insideItem;
     private int Thickness = 1;
 
+    //this.borderItem = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+    //this.insideItem = new ItemStack(Material.);
 
-    public FillBorder(Inventory inventory){
+
+    public FillBorder(Inventory inventory, int thickness) {
         this.inventory = inventory;
-        this.item = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+        Thickness = thickness;
+
+        this.borderItem = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+        this.insideItem = new ItemStack(Material.AIR);
     }
 
-    public FillBorder(Inventory inventory, ItemStack item){
+    public FillBorder(Inventory inventory, ItemStack borderItem, int thickness) {
         this.inventory = inventory;
-        this.item = item;
-    }
-    public FillBorder(Inventory inventory, ItemStack item, int Thickness){
-        this.inventory = inventory;
-        this.item = item;
-        this.Thickness = Thickness;
+        this.borderItem = borderItem;
+        Thickness = thickness;
+        this.insideItem = new ItemStack(Material.AIR);
     }
 
-    public FillBorder(Inventory inventory, int Thickness){
+    public FillBorder(Inventory inventory, ItemStack borderItem, ItemStack insideItem, int thickness) {
         this.inventory = inventory;
-        this.item = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
-        this.Thickness = Thickness;
+        this.borderItem = borderItem;
+        this.insideItem = insideItem;
+        Thickness = thickness;
+    }
+
+    public FillBorder(Inventory inventory, ItemStack borderItem, ItemStack insideItem) {
+        this.inventory = inventory;
+        this.borderItem = borderItem;
+        this.insideItem = insideItem;
+    }
+
+    public FillBorder(Inventory inventory, ItemStack borderItem) {
+        this.inventory = inventory;
+        this.borderItem = borderItem;
+
+        this.insideItem = new ItemStack(Material.AIR);
+    }
+
+    public FillBorder(Inventory inventory) {
+        this.inventory = inventory;
+
+        this.borderItem = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+        this.insideItem = new ItemStack(Material.AIR);
     }
 
     public void fillBorder() {
-        try{
+        try {
             Layouts layouts = new Layouts(inventory);
 
-            int slotStart = 0;
-            int slotX = 9;
-            int slotY = inventory.getSize();
-            //fill border with the item
-            layouts.fillBox(item, slotX, slotY,  slotStart);
+            int rows = inventory.getSize() / 9;
 
-            //fill with air
+            layouts.fillBox(borderItem, 9, rows, 0);
 
-            int slotStartAir = slotStart + 10 * Thickness;
-            int slotYAir = inventory.getSize() - 10 * Thickness;
-            //fill border with the item
-            layouts.fillBox(item, slotX, slotYAir, slotStartAir );
+            int slotStartAir = Thickness * 9 + Thickness;
+            int heightAir = rows - 2 * Thickness;
+            int widthAir = 9 - 2 * Thickness;
 
-        }catch (Exception ex){
-            Bukkit.getLogger().log(Level.WARNING, "Error SetItem "+ex);
+            layouts.fillBox(insideItem, widthAir, heightAir, slotStartAir);
+
+        } catch (Exception ex) {
+            Bukkit.getLogger().log(Level.WARNING, "Error SetItem " + ex);
         }
+
 
     }
 }

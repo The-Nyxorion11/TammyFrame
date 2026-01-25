@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 
 import java.util.UUID;
 
@@ -17,7 +18,10 @@ public class ClickEvent implements Listener {
         Player player = (Player) event.getWhoClicked();
         Inventory inventory = event.getInventory();
 
-        Button button = getButton(inventory);
+        InventoryView view = event.getView();
+        String title = view.getTitle();
+
+        Button button = getButton(title);
 
         if (button != null) {
             int slot = event.getSlot();
@@ -28,11 +32,12 @@ public class ClickEvent implements Listener {
         }
     }
 
-    private Button getButton(Inventory inventory){
-        Button button = SystemUi.inventoryClick.get(inventory);
+    private Button getButton(String title){
+
+        Button button = SystemUi.inventoryClick.get(title);
 
 
-        SystemUi.inventoryClick.remove(inventory);
+        SystemUi.inventoryClick.remove(title);
         return button;
     }
 

@@ -9,17 +9,21 @@ public abstract class Button {
 
     private ItemStack item;
     private Inventory inventory;
+    private Player player;
 
 
-    public Button(ItemStack item, Inventory inventory) {
+    public Button(ItemStack item, Inventory inventory, Player player) {
         this.item = item;
         this.inventory = inventory;
+        this.player = player;
     }
 
 
 
     public void enable(){
-        SystemUi.inventoryClick.put(inventory, this);
+        String title = player.getOpenInventory().getTitle();
+
+        SystemUi.inventoryClick.put(title, this);
     }
 
     public int getSlotOfItem() {

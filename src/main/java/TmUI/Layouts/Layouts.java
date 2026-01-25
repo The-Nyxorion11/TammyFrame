@@ -15,21 +15,17 @@ public class Layouts {
         this.inventory = inventory;
     }
     
-    public void fillBox(ItemStack item, int x, int y, int slot){
+    public void fillBox(ItemStack item, int width, int height, int startSlot){
         try{
             int slotBlank = 8;
 
-            for(int i = 0; i <= y; i++){
-                for (int s = slot; s <= 8; s++ ){
-                    if(s - slotBlank == slot){
-                        slot = slot  + s;
-
-                        for(int c = 0; c <= x; c++){
-                            inventory.setItem(slot + c, item);
-                        }
-                    }
+            for (int row = 0; row < height; row++) {
+                for (int col = 0; col < width; col++) {
+                    int slot = startSlot + row * 9 + col; // 9 columnas por fila
+                    inventory.setItem(slot, item);
                 }
             }
+
 
         }catch (Exception ex){
             Bukkit.getLogger().log(Level.WARNING, "Error SetItem "+ex);

@@ -21,6 +21,13 @@ public abstract class Ui {
 
     private Inventory inventory;
     private boolean blockInventory = false;
+    private Player player;
+
+    public Ui() {}
+
+    public Ui(boolean blockInventory) {
+        this.blockInventory = blockInventory;
+    }
 
     //moreSystems
     protected Layouts layouts = new Layouts(inventory);
@@ -31,7 +38,9 @@ public abstract class Ui {
     }
 
     //controller inventory
-    private void constructor(Player player, int size, String title){
+    private void constructor(Player plr, int size, String title){
+        player = plr;
+
         // more ui logic
         createInventory(size, title);
         compose();
@@ -83,6 +92,10 @@ public abstract class Ui {
     //utils
     public Inventory getInventory(){
         return inventory;
+    }
+
+    public Player getPlayer(){
+        return player;
     }
 
 
