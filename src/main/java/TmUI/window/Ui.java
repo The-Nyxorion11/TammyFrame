@@ -39,7 +39,7 @@ public abstract class Ui {
 
         // more ui logic
         createInventory(size, title);
-        setConfig(player);
+        setConfig(player, title);
         openInventory(player);
         setParam();
 
@@ -60,10 +60,9 @@ public abstract class Ui {
         player.openInventory(inventory);
     }
 
-    private void setConfig(Player player){
+    private void setConfig(Player player, String title){
         if(blockInventory){
             UUID uuid = player.getUniqueId();
-            String title = inventory.getTitle();
             SystemUi.inventoryBlocked.put(uuid, title);
         }
     }
