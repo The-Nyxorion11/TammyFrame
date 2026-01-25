@@ -28,6 +28,7 @@ public class ClickEvent implements Listener {
 
             if(slot == button.getSlotOfItem()){
                 button.onClick();
+                button.setInventoryClickEvent(event);
             }
         }
     }

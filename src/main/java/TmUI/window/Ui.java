@@ -20,18 +20,14 @@ import TmUI.SystemUi;
 public abstract class Ui {
 
     private Inventory inventory;
-    private boolean blockInventory = false;
+    private boolean blockInventory;
     private Player player;
 
-    public Ui() {}
+    protected Layouts layouts;
 
     public Ui(boolean blockInventory) {
         this.blockInventory = blockInventory;
     }
-
-    //moreSystems
-    protected Layouts layouts = new Layouts(inventory);
-
 
     public void openUi(Player player, int size, String title){
         constructor(player,  size, title);
@@ -43,9 +39,17 @@ public abstract class Ui {
 
         // more ui logic
         createInventory(size, title);
-        compose();
         setConfig(player);
         openInventory(player);
+        setParam();
+
+        compose();
+    }
+
+    //moreSystems
+
+    private void setParam(){
+        layouts = new Layouts(inventory);
     }
 
     private void createInventory(int size, String title){
@@ -89,6 +93,15 @@ public abstract class Ui {
         inventory.setItem(slot, item);
     }
 
+    protected void closeUI(){
+        getPlayer().closeInventory();
+    }
+
+    protected void navigate(Ui ui, int size, String title){
+        closeUI();
+        ui.openUi(getPlayer(), size, title);
+    }
+
     //utils
     public Inventory getInventory(){
         return inventory;
@@ -97,7 +110,5 @@ public abstract class Ui {
     public Player getPlayer(){
         return player;
     }
-
-
 
 }

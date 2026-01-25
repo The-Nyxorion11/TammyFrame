@@ -2,6 +2,7 @@ package TmUI.controls;
 
 import TmUI.SystemUi;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -10,7 +11,7 @@ public abstract class Button {
     private ItemStack item;
     private Inventory inventory;
     private Player player;
-
+    private InventoryClickEvent inventoryClickEvent;
 
     public Button(ItemStack item, Inventory inventory, Player player) {
         this.item = item;
@@ -18,7 +19,13 @@ public abstract class Button {
         this.player = player;
     }
 
+    public InventoryClickEvent getInventoryClickEvent() {
+        return inventoryClickEvent;
+    }
 
+    public void setInventoryClickEvent(InventoryClickEvent inventoryClickEvent) {
+        this.inventoryClickEvent = inventoryClickEvent;
+    }
 
     public void enable(){
         String title = player.getOpenInventory().getTitle();
