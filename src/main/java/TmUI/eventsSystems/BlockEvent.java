@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import TmUI.SystemUi;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.InventoryView;
@@ -54,13 +55,24 @@ public class BlockEvent implements Listener {
 
     }
 
+    @EventHandler
+    public void closeInventory(InventoryCloseEvent event) {
+        Player player = (Player) event.getPlayer();
+        String title = getTitle(player);
+
+        if (getTitle(player).equalsIgnoreCase(title)) {
+            UUID uuid = player.getUniqueId();
+            SystemUi.inventoryBlocked.remove(uuid);
+        }
+    }
+
+
     private String getTitle(Player player){
         String defaultValue = "not exist, sorry! (-.,´ñllñsad<|¿320)";
         UUID uuid = player.getUniqueId();
 
         String title = SystemUi.inventoryBlocked.getOrDefault(uuid, defaultValue);
 
-        SystemUi.inventoryBlocked.remove(uuid);
         return title;
     }
 }
