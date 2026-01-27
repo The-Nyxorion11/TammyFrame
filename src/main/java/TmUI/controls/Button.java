@@ -16,11 +16,11 @@ public abstract class Button {
     private final Player player;
     private InventoryClickEvent inventoryClickEvent;
 
-    public Button(ItemStack item, int slot, Inventory inventory, Player player) {
+    public Button(ItemStack item, Inventory inventory, Player player) {
         this.item = item;
-        this.slot = slot;
         this.inventory = inventory;
         this.player = player;
+        this.slot = getSlotOfItem(inventory, item);
     }
 
     public int getSlot() {
@@ -39,16 +39,27 @@ public abstract class Button {
         this.inventoryClickEvent = inventoryClickEvent;
     }
 
-    public void enable() {
+    public void enable(Button button) {
         String title = player.getOpenInventory().getTitle();
 
 
         SystemUi.inventoryClick.putIfAbsent(title, new HashMap<>());
 
-        SystemUi.inventoryClick.get(title).put(slot, this);
+        SystemUi.inventoryClick.get(title).put(slot, button);
 
         inventory.setItem(slot, item);
     }
+
+    public int getSlotOfItem(Inventory inventory, ItemStack item) {
+        for (int i = 0; i < inventory.getSize(); i++) {
+            ItemStack current = inventory.getItem(i);
+            if (current != null && current.isSimilar(item)) {
+                return i; // Devuelve el slot donde está el ítem
+            }
+        }
+        return -1; // Si no lo encuentra
+    }
+
 
     public abstract void onClick();
 
