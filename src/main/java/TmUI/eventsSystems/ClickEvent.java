@@ -10,44 +10,34 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 
+import java.util.Map;
 import java.util.UUID;
 
 public class ClickEvent implements Listener {
 
     @EventHandler
-    public void removeItem(InventoryClickEvent event){
+    public void clickButton(InventoryClickEvent event){
         InventoryView view = event.getView();
         String title = view.getTitle();
 
-        Button button = getButton(title);
+        Map<Integer, Button> buttons = SystemUi.inventoryClick.get(title);
+        if (buttons == null) return;
+
+        int slot = event.getSlot();
+        Button button = buttons.get(slot);
 
         if (button != null) {
-            int slot = event.getSlot();
-
-            if(slot == button.getSlotOfItem()){
-                button.onClick();
-                button.setInventoryClickEvent(event);
-            }
+            button.setInventoryClickEvent(event);
+            button.onClick();
         }
+
     }
 
     @EventHandler
     public void closeInventory(InventoryCloseEvent event) {
-        InventoryView view = event.getView();
-        String title = view.getTitle();
+        String title = event.getView().getTitle();
+        SystemUi.inventoryClick.remove(title);
 
-        Button button = getButton(title);
-
-        if (button != null) {
-            SystemUi.inventoryClick.remove(title);
-        }
-    }
-
-    private Button getButton(String title){
-
-        Button button = SystemUi.inventoryClick.get(title);
-
-        return button;
     }
 
 }

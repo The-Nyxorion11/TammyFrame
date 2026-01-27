@@ -10,6 +10,6 @@ import java.util.UUID;
 public class SystemUi {
     //for implement the config
     public static  Map<UUID, String>  inventoryBlocked = new HashMap<>();
-    public static  Map<String, Button>  inventoryClick = new HashMap<>();
+    public static  Map<String, Map<Integer, Button>>  inventoryClick = new HashMap<>();
 
 }
