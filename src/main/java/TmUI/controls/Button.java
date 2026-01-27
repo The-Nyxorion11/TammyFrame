@@ -39,13 +39,13 @@ public abstract class Button {
         this.inventoryClickEvent = inventoryClickEvent;
     }
 
-    public void enable(Button button) {
+    public void enable() {
         String title = player.getOpenInventory().getTitle();
 
 
         SystemUi.inventoryClick.putIfAbsent(title, new HashMap<>());
 
-        SystemUi.inventoryClick.get(title).put(slot, button);
+        SystemUi.inventoryClick.get(title).put(slot, this);
 
         inventory.setItem(slot, item);
     }

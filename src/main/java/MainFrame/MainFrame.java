@@ -3,6 +3,7 @@ package MainFrame;
 import TmCoroutines.coroutines;
 import TmRoom.TmRoomManager;
 import TmUI.eventsSystems.BlockEvent;
+import TmUI.eventsSystems.ClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import TmUtils.TammyUtils;
@@ -27,5 +28,6 @@ public class MainFrame extends JavaPlugin {
 
     private void registerEvnets(){
         getServer().getPluginManager().registerEvents(new BlockEvent(), this);
+        getServer().getPluginManager().registerEvents(new ClickEvent(), this);
     }
 }

@@ -18,7 +18,6 @@ public class ClickEvent implements Listener {
 
     @EventHandler
     public void clickButton(InventoryClickEvent event){
-        Bukkit.getConsoleSender().sendMessage("prueba1");
         InventoryView view = event.getView();
         String title = view.getTitle();
 
@@ -29,8 +28,6 @@ public class ClickEvent implements Listener {
         Button button = buttons.get(slot);
 
         if (button != null) {
-            Bukkit.getConsoleSender().sendMessage("prueba2");
-
             button.setInventoryClickEvent(event);
             button.onClick();
         }

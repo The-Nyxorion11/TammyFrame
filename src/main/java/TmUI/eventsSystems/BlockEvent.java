@@ -25,7 +25,6 @@ public class BlockEvent implements Listener {
 
         if (getTitle(player).equalsIgnoreCase(title)) {
             event.setCancelled(true);
-
         }
     }
 
