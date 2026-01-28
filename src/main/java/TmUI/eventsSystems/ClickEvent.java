@@ -19,9 +19,10 @@ public class ClickEvent implements Listener {
     @EventHandler
     public void clickButton(InventoryClickEvent event){
         InventoryView view = event.getView();
-        String title = view.getTitle();
+        Player player =  (Player) event.getWhoClicked();
+        UUID uuid = player.getUniqueId();
 
-        Map<Integer, Button> buttons = SystemUi.inventoryClick.get(title);
+        Map<Integer, Button> buttons = SystemUi.inventoryClick.get(uuid);
         if (buttons == null) return;
 
         int slot = event.getSlot();
@@ -36,8 +37,10 @@ public class ClickEvent implements Listener {
 
     @EventHandler
     public void closeInventory(InventoryCloseEvent event) {
-        String title = event.getView().getTitle();
-        SystemUi.inventoryClick.remove(title);
+        Player player =  (Player) event.getPlayer();
+        UUID uuid = player.getUniqueId();
+
+        SystemUi.inventoryClick.remove(uuid);
 
     }
 

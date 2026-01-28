@@ -7,6 +7,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public abstract class Button {
 
@@ -40,12 +41,10 @@ public abstract class Button {
     }
 
     public void enable() {
-        String title = player.getOpenInventory().getTitle();
+        UUID uuid = player.getUniqueId();
+        SystemUi.inventoryClick.putIfAbsent(uuid, new HashMap<>());
 
-
-        SystemUi.inventoryClick.putIfAbsent(title, new HashMap<>());
-
-        SystemUi.inventoryClick.get(title).put(slot, this);
+        SystemUi.inventoryClick.get(uuid).put(slot, this);
 
         inventory.setItem(slot, item);
     }
