@@ -1,8 +1,7 @@
 package TmUI.window;
 
-import TmUI.Layouts.FillBorder;
+
 import TmUI.Layouts.Layouts;
-import TmUI.controls.Button;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -86,10 +85,6 @@ public abstract class Ui {
         }
 
         return null;
-    }
-
-    protected void setItem(int slot, ItemStack item){
-        inventory.setItem(slot, item);
     }
 
     protected void closeUI(){
